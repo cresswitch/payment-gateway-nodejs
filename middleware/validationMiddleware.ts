@@ -1,0 +1,12 @@
+import express, {Request, Response} from 'express';
+import { Schema } from 'joi';
+
+export const createValidationMiddleware = (schema: Schema) => {
+    return (req: Request, res: Response, next: Function) => {
+      const { error } = schema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+      next();
+    };
+  };
