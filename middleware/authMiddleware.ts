@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import { User } from '../models/User';
 import { logger } from '../utils/logger';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export const authenticateJWT = async (req: Request, res: Response, next: Function) => {
     try {
@@ -15,14 +15,14 @@ export const authenticateJWT = async (req: Request, res: Response, next: Functio
         return res.status(401).json({ error: 'Access denied. Invalid token format.' });
       }
   
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded: JwtPayload = jwt.verify(token, process.env.JWT_SECRET as jwt.Secret) as JwtPayload;
       const user = await User.findById(decoded.id).select('-password');
       
       if (!user) {
         return res.status(401).json({ error: 'Invalid token. User not found.' });
       }
   
-      req.user = user;
+      req.body.user = user;
       next();
     } catch (error: any) {
       logger.error('Authentication error:', error);

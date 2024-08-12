@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { logger } from "../utils/logger";
 import { validator } from "../utils/validator";
 import { Request, Response } from 'express';
+import { Model } from 'mongoose';
 
 export class authController{
     async register(req: Request, res: Response){
@@ -14,11 +15,16 @@ export class authController{
         
             let user = await User.findOne({ email });
             if (user) return res.status(400).json({ error: 'User already exists' });
+            else {
+              user = new User({ email: email, password: password, firstName: firstName, lastName: lastName });
+            }
         
-            user = { email, password, firstName, lastName };
+            // user = { email, password, firstName, lastName };
+            user.email = email;
+
             await user.save();
         
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as jwt.Secret, { expiresIn: '1d' });
         
             res.status(201).json({ token, user: { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName } });
           } catch (error) {

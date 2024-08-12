@@ -43,6 +43,13 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
       }
+},
+{
+  methods:{
+    async checkPassword(candidatePassword: any) : Promise<Boolean> {
+      return await bcrypt.compare(candidatePassword, this.password);
+    }
+  }
 });
 
 // hash password
@@ -51,10 +58,5 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 12);
   next();
 })
-
-// check password
-export default userSchema.methods.checkPassword = async function(candidatePassword: any) : Promise<Boolean> {
-    return await bcrypt.compare(candidatePassword, this.password);
-}
 
 export const User = mongoose.model('User', userSchema);
