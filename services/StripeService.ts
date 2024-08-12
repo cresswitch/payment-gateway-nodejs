@@ -4,7 +4,7 @@ import config from '../config';
 export class StripeService {
     stripe: stripePackage = new stripePackage(config.stripeSecretKey);
 
-    constructor(){
+    constructor(stripe: string){
       this.stripe = new stripePackage(config.stripeSecretKey);
     };
 

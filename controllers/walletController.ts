@@ -17,7 +17,7 @@ export class walletController {
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { initialBalance } = req.body;
-            const userId = req.user.id;
+            const userId = req.body.user.id;
         
             //const stripeService = initStripeService(req);
             const result = await this.walletService.createWallet(userId, initialBalance);
@@ -34,7 +34,7 @@ export class walletController {
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { amount, paymentMethodId } = req.body;
-            const userId = req.user.id;
+            const userId = req.body.user.id;
         
             //const stripeService = initStripeService(req);
             const result = await this.walletService.deposit(userId, amount, paymentMethodId);
@@ -51,7 +51,7 @@ export class walletController {
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { toUserId, amount } = req.body;
-            const fromUserId = req.user.id;
+            const fromUserId = req.body.user.id;
         
             const result = await this.walletService.transfer(fromUserId, toUserId, amount);
             res.json(result);
@@ -67,7 +67,7 @@ export class walletController {
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { amount, destinationAccount } = req.body;
-            const userId = req.user.id;
+            const userId = req.body.user.id;
         
             //const stripeService = initStripeService(req);
             const result = await this.walletService.withdraw(userId, amount, destinationAccount);
@@ -80,7 +80,7 @@ export class walletController {
 
     async getBalance(req: Request, res: Response) {
         try {
-            const userId = req.user.id;
+            const userId = req.body.user.id;
             const result = await this.walletService.getBalance(userId);
             res.json(result);
           } catch (error: any) {
@@ -91,7 +91,7 @@ export class walletController {
 
     async getTransactionHistory(req: Request, res: Response) {
         try {
-            const userId = req.user.id;
+            const userId = req.body.user.id;
             const result = await this.walletService.getTransactionHistory(userId);
             res.json(result);
           } catch (error: any) {

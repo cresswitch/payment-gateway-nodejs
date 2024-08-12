@@ -2,6 +2,7 @@ import { StripeService } from "../services/StripeService";
 import { validator } from "../utils/validator";
 import { logger } from "../utils/logger";
 import { Request, Response } from 'express';
+import stripePackage from 'stripe';
 
 export class stripeController{
     initStripeService(req: Request): StripeService{
@@ -19,7 +20,7 @@ export class stripeController{
         
             const stripeService = this.initStripeService(req);
             const paymentMethod = await stripeService.createPaymentMethod(type, card);
-            const customerId = req.user.stripeCustomerId;  // Assuming this is stored with the user
+            const customerId = req.body.user.stripeCustomerId;  // Assuming this is stored with the user
             await stripeService.attachPaymentMethodToCustomer(paymentMethod.id, customerId);
         
             res.json({ paymentMethod });
@@ -31,7 +32,7 @@ export class stripeController{
 
     async getPaymentMethods(req: Request, res: Response) {
         try {
-            const customerId = req.user.stripeCustomerId;  // Assuming this is stored with the user
+            const customerId = req.body.user.stripeCustomerId;  // Assuming this is stored with the user
             const stripeService = this.initStripeService(req);
             const paymentMethods = await stripeService.listCustomerPaymentMethods(customerId);
             res.json({ paymentMethods });
@@ -47,7 +48,7 @@ export class stripeController{
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { amount } = req.body;
-            const customerId = req.user.stripeCustomerId;  // Assuming this is stored with the user
+            const customerId = req.body.user.stripeCustomerId;  // Assuming this is stored with the user
         
             const stripeService = this.initStripeService(req);
             const paymentIntent = await stripeService.createPaymentIntent(amount, 'usd', customerId);

@@ -53,7 +53,7 @@ userSchema.pre('save', async function(next) {
 })
 
 // check password
-userSchema.methods.checkPassword = async function(candidatePassword: any) : Promise<Boolean> {
+export default userSchema.methods.checkPassword = async function(candidatePassword: any) : Promise<Boolean> {
     return await bcrypt.compare(candidatePassword, this.password);
 }
 

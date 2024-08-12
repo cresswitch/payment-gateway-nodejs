@@ -40,7 +40,7 @@ export class authController{
             const isMatch = await user.checkPassword(password);
             if (!isMatch) return res.status(400).json({ error: 'Invalid email or password' });
         
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as jwt.Secret, { expiresIn: '1d' });
         
             res.json({ token, user: { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName } });
           } catch (error) {

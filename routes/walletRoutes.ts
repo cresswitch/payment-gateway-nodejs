@@ -2,11 +2,14 @@ import express from 'express';
 import { authenticateJWT } from '../middleware/authMiddleware';
 import { walletController } from '../controllers/walletController';
 
-const router = express.Router();
+const walletRouter = express.Router();
+const WalletController = new walletController();
 
-router.post('/create', authenticateJWT, WalletController.createWallet);
-router.post('/deposit', authenticateJWT, WalletController.deposit);
-router.post('/transfer', authenticateJWT, WalletController.transfer);
-router.post('/withdraw', authenticateJWT, WalletController.withdraw);
-router.get('/balance', authenticateJWT, WalletController.getBalance);
-router.get('/transactions', authenticateJWT, WalletController.getTransactionHistory);
+walletRouter.post('/create', authenticateJWT, WalletController.createWallet);
+walletRouter.post('/deposit', authenticateJWT, WalletController.deposit);
+walletRouter.post('/transfer', authenticateJWT, WalletController.transfer);
+walletRouter.post('/withdraw', authenticateJWT, WalletController.withdraw);
+walletRouter.get('/balance', authenticateJWT, WalletController.getBalance);
+walletRouter.get('/transactions', authenticateJWT, WalletController.getTransactionHistory);
+
+export default walletRouter;
