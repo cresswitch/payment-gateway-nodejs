@@ -1,6 +1,6 @@
 import express from 'express';
 import { stripeController } from '../controllers/stripeController';
-import { authenticateJWT } from '../middleware/authMiddleware';
+import { authenticateJWT } from '../user/authMiddleware';
 
 const stripeRouter = express.Router();
 const StripeController = new stripeController();

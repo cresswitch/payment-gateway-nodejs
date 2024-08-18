@@ -4,10 +4,10 @@ import { Request, Response } from "express";
 export function errorHandler(err: any, req: Request, res: Response, next: Function) {
   logger.error(err.stack);
 
-  /*if(err.name == "ValidationError"){
-    const errors = Object.values(err.errors).map(error => error.message);
+  if(err.name == "ValidationError"){
+    const errors = Object.values(err.errors);
     return res.status(400).json({ error: errors });
-  }*/
+  }
 
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue)[0];

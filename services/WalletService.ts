@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 import { Transaction } from '../models/Transaction';
-import { User } from '../models/User';
+import { User } from '../user/User';
 import { StripeService } from './StripeService';
 
 export class WalletService {

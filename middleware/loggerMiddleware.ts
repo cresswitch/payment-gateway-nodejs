@@ -1,5 +1,5 @@
 import { logger } from "../utils/logger";
-import express, {Request, Response} from 'express';
+import { Request, Response } from 'express';
 
 export const requestLogger = (req: Request, res: Response, next: Function) => {
     logger.info(`${req.method} ${req.url}`, {
