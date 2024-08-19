@@ -22,7 +22,6 @@ export const validator = {
     validateWalletCreation(data: Object) {
       const schema = Joi.object({
         userId: Joi.string().required(),
-        email: Joi.string().required(),
         initialBalance: Joi.number().min(0).default(0)
       });
       return schema.validate(data);

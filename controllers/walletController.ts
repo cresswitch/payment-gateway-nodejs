@@ -12,8 +12,7 @@ export class walletController {
     walletService: WalletService = new WalletService();
 
     async createWallet(req: Request, res: Response) {
-        try {
-            const { error } = validator.validateWalletCreation(req.body);
+        try {const { error } = validator.validateWalletCreation(req.body);
             if (error) return res.status(400).json({ error: error.details[0].message });
         
             const { initialBalance, userId } = req.body;
