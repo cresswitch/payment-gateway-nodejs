@@ -1,9 +1,8 @@
-import { User } from "./User";
+import { User } from "../models/User";
 import jwt from 'jsonwebtoken';
 import { logger } from "../utils/logger";
 import { validator } from "../utils/validator";
 import { Request, Response } from 'express';
-import { Model } from 'mongoose';
 
 export class authController{
     async register(req: Request, res: Response){

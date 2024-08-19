@@ -7,7 +7,7 @@ import stripePackage from 'stripe';
 export class stripeController{
     initStripeService(req: Request): StripeService{
         const stripeSecretKey = req.get('stripe-secret-key') as string;
-        return new StripeService(stripeSecretKey);
+        return new StripeService(new stripePackage(stripeSecretKey));
     }
     
     async createPaymentMethod(req: Request, res: Response) {

@@ -16,8 +16,7 @@ export class walletController {
             const { error } = validator.validateWalletCreation(req.body);
             if (error) return res.status(400).json({ error: error.details[0].message });
         
-            const { initialBalance } = req.body;
-            const userId = req.body.user.id;
+            const { initialBalance, userId } = req.body;
         
             //const stripeService = initStripeService(req);
             const result = await this.walletService.createWallet(userId, initialBalance);
@@ -33,8 +32,7 @@ export class walletController {
             const { error } = validator.validateTransaction({ ...req.body, type: 'deposit' });
             if (error) return res.status(400).json({ error: error.details[0].message });
         
-            const { amount, paymentMethodId } = req.body;
-            const userId = req.body.user.id;
+            const { amount, paymentMethodId, userId } = req.body;
         
             //const stripeService = initStripeService(req);
             const result = await this.walletService.deposit(userId, amount, paymentMethodId);

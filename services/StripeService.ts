@@ -4,7 +4,10 @@ import config from '../config';
 export class StripeService {
     stripe: stripePackage = new stripePackage(config.stripeSecretKey);
 
-    constructor(stripe = new stripePackage(config.stripeSecretKey)){};
+    constructor(stripe?: stripePackage);
+    constructor(){
+      this.stripe = new stripePackage(config.stripeSecretKey)
+    };
 
     async createCustomer(email: string | undefined) {
         try {

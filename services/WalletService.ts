@@ -1,12 +1,12 @@
 import { ObjectId } from 'mongoose';
 import { Transaction } from '../models/Transaction';
-import { User } from '../user/User';
+import { User } from '../models/User';
 import { StripeService } from './StripeService';
 
 export class WalletService {
     stripeService = new StripeService();
 
-    async createWallet(userId: ObjectId, email: string) {
+    async createWallet(userId: ObjectId, initialBalance: number) {
         const user = await User.findById(userId);
         if (!user) {
           throw new Error('User not found');
@@ -15,8 +15,8 @@ export class WalletService {
           throw new Error('Wallet already exists for this user');
         }
         
-        const customer = await this.stripeService.createCustomer(email);
-        user.wallet = { balance: 0, stripeCustomerId: customer.id };
+        const customer = await this.stripeService.createCustomer(user.email);
+        user.wallet = { balance: initialBalance, stripeCustomerId: customer.id };
         await user.save();
         
         return { success: true, wallet: user.wallet };

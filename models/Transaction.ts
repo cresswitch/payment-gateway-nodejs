@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema({
-    type: {
+      type: {
         type: String,
         enum: ['deposit', 'withdraw', 'transfer'],
         required: true
@@ -18,12 +18,12 @@ const transactionSchema = new mongoose.Schema({
       fromWallet: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Wallet',
-        required: function(): boolean { return this.type === 'transfer'; }
+        required: function(): boolean { return transactionSchema.obj.type === 'transfer'; }
       },
       toWallet: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Wallet',
-        required: function(): boolean { return this.type === 'transfer' || this.type === 'deposit'; }
+        required: function(): boolean { return transactionSchema.obj.type === 'transfer' || transactionSchema.obj.type === 'deposit'; }
       },
       status: {
         type: String,

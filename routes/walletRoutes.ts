@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateJWT } from '../user/authMiddleware';
+import { authenticateJWT } from '../middleware/authMiddleware';
 import { walletController } from '../controllers/walletController';
 
 const walletRouter = express.Router();

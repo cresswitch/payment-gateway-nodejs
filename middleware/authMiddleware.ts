@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import { User } from './User';
+import { User } from '../models/User';
 import { logger } from '../utils/logger';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 

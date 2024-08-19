@@ -6,12 +6,7 @@ import mongoose, { ConnectOptions } from "mongoose";
 
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGODB_URI as string, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-} as ConnectOptions)
+mongoose.connect(process.env.MONGODB_URI as string)
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
