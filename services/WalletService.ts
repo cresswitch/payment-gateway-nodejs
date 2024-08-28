@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { Document, Model, ObjectId } from 'mongoose';
 import { Transaction } from '../models/Transaction';
 import { User } from '../models/User';
 import { StripeService } from './StripeService';
@@ -7,7 +7,7 @@ export class WalletService {
     stripeService = new StripeService();
 
     async createWallet(userId: ObjectId, initialBalance: number) {
-        const user = await User.findById(userId);
+        let user = await User.findById(userId);
         if (!user) {
           throw new Error('User not found');
         }
